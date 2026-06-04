@@ -942,6 +942,7 @@ window.setPhase = setPhase;
 window.savePronosticos = savePronosticos;
 window.renderTodos = renderTodos;
 window.markChanged = markChanged;
+  
 // ── FIRESTORE SYNC ──
 onSnapshot(collection(db, "pronosticos"), snapshot => {
   pronosticos = {};
