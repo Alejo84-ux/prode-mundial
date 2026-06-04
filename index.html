@@ -1,1 +1,972 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prode Mundial 2026 🏆</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #0a3d1f;
+    --green-mid: #1a6b3c;
+    --green-light: #2d9e5c;
+    --gold: #c9a227;
+    --gold-light: #f0c94a;
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.16);
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --text3: #484f58;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+ 
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(180deg, #0a1f0f 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo span { color: var(--text); }
+  .header-nav { display: flex; gap: 4px; }
+  .hnav-btn {
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text2);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+  }
+  .hnav-btn:hover { background: var(--bg3); color: var(--text); }
+  .hnav-btn.active { background: var(--green-mid); color: #fff; }
+  .header-user {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .user-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--green-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 12px; color: #fff;
+    cursor: pointer;
+  }
+  .btn-login {
+    padding: 6px 16px; border-radius: 8px;
+    background: var(--green-mid); color: #fff;
+    border: none; font-family: 'Inter', sans-serif;
+    font-size: 13px; cursor: pointer; font-weight: 500;
+    transition: background 0.15s;
+  }
+  .btn-login:hover { background: var(--green-light); }
+ 
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0a1f0f 0%, #0d2818 40%, #0a1f0f 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 1.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '⚽';
+    position: absolute; top: -20px; right: -20px;
+    font-size: 180px; opacity: 0.04;
+    transform: rotate(-15deg);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(201,162,39,0.15); border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 20px; padding: 4px 14px;
+    font-size: 12px; color: var(--gold); margin-bottom: 1rem;
+    font-weight: 500; letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 64px);
+    letter-spacing: 3px;
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 .accent { color: var(--gold); }
+  .hero p { color: var(--text2); font-size: 15px; margin-bottom: 1.5rem; }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; color: var(--gold-light);
+    line-height: 1;
+  }
+  .hero-stat-lbl { font-size: 11px; color: var(--text3); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+ 
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 1000px; margin: 0 auto; padding: 1.5rem; }
+  .section { display: none; }
+  .section.active { display: block; }
+ 
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-title {
+    font-size: 13px; font-weight: 600;
+    color: var(--text); text-transform: uppercase; letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--green-light);
+  }
+ 
+  /* ── STATS GRID ── */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px; margin-bottom: 1.5rem;
+  }
+  .stat-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px;
+  }
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; color: var(--gold); line-height: 1;
+  }
+  .stat-lbl { font-size: 11px; color: var(--text3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+ 
+  /* ── TABLA ── */
+  .tabla-wrap { overflow-x: auto; }
+  .tabla {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+  }
+  .tabla th {
+    padding: 10px 14px; text-align: left;
+    color: var(--text3); font-weight: 500; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .tabla td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text); }
+  .tabla tr:last-child td { border-bottom: none; }
+  .tabla tr:hover td { background: rgba(255,255,255,0.02); }
+  .rank-num { font-weight: 600; color: var(--text3); font-size: 13px; }
+  .rank-gold { color: var(--gold); font-size: 16px; }
+  .rank-silver { color: #aaa; font-size: 16px; }
+  .rank-bronze { color: #cd7f32; font-size: 16px; }
+  .pts-big { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--green-light); }
+  .player-cell { display: flex; align-items: center; gap: 10px; }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--green-dark); border: 1px solid var(--green-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--green-light);
+    flex-shrink: 0;
+  }
+ 
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 20px;
+    font-size: 11px; font-weight: 500;
+  }
+  .badge-exact { background: rgba(45,158,92,0.2); color: #4ade80; }
+  .badge-partial { background: rgba(201,162,39,0.2); color: var(--gold-light); }
+  .badge-wrong { background: rgba(239,68,68,0.15); color: #f87171; }
+ 
+  /* ── MODAL PRONÓSTICOS ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    width: 100%; max-width: 720px;
+    margin: auto;
+    animation: slideUp 0.25s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; background: var(--bg2);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0; z-index: 10;
+  }
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 1px; color: var(--gold);
+  }
+  .modal-close {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text2); cursor: pointer; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; font-family: 'Inter', sans-serif;
+  }
+  .modal-close:hover { background: rgba(239,68,68,0.15); color: #f87171; border-color: rgba(239,68,68,0.3); }
+  .modal-body { padding: 20px; }
+ 
+  /* ── PHASE TABS ── */
+  .phase-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .phase-tab {
+    padding: 6px 14px; border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent; color: var(--text2);
+    font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer;
+    transition: all 0.15s; font-weight: 500;
+  }
+  .phase-tab:hover { border-color: var(--border-hover); color: var(--text); }
+  .phase-tab.active { background: var(--green-mid); color: #fff; border-color: var(--green-mid); }
+ 
+  /* ── GRUPO ── */
+  .grupo-block { margin-bottom: 20px; }
+  .grupo-label {
+    font-size: 11px; font-weight: 600; color: var(--text3);
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 0 0 8px;
+  }
+  .match-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    transition: border-color 0.15s;
+  }
+  .match-card:hover { border-color: var(--border-hover); }
+  .match-card.saved { border-color: rgba(45,158,92,0.4); }
+  .match-top {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .team-block { flex: 1; display: flex; align-items: center; gap: 8px; }
+  .team-block.right { flex-direction: row-reverse; }
+  .team-flag { font-size: 20px; line-height: 1; }
+  .team-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .score-inputs {
+    display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  }
+  .score-in {
+    width: 38px; height: 38px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-size: 16px; font-weight: 600; text-align: center;
+    outline: none; transition: border-color 0.15s;
+    font-family: 'Bebas Neue', sans-serif;
+  }
+  .score-in:focus { border-color: var(--green-light); }
+  .score-in::placeholder { color: var(--text3); font-family: 'Inter', sans-serif; font-size: 12px; }
+  .vs-sep { font-size: 11px; color: var(--text3); font-weight: 600; }
+  .match-meta {
+    font-size: 11px; color: var(--text3); margin-top: 6px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .match-meta span { display: flex; align-items: center; gap: 4px; }
+ 
+  /* ── SAVE BTN ── */
+  .btn-save {
+    width: 100%; padding: 12px;
+    background: var(--green-mid); color: #fff;
+    border: none; border-radius: var(--radius);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 1px;
+    cursor: pointer; margin-top: 8px;
+    transition: background 0.15s;
+  }
+  .btn-save:hover { background: var(--green-light); }
+ 
+  /* ── LOGIN MODAL ── */
+  .login-modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center; padding: 1rem;
+  }
+  .login-modal-overlay.open { display: flex; }
+  .login-modal {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); width: 100%; max-width: 380px;
+    padding: 32px; text-align: center;
+    animation: slideUp 0.25s ease;
+  }
+  .login-icon { font-size: 48px; margin-bottom: 16px; }
+  .login-modal h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 1px; color: var(--gold); margin-bottom: 6px;
+  }
+  .login-modal p { color: var(--text2); font-size: 13px; margin-bottom: 20px; }
+  .input-field {
+    width: 100%; padding: 10px 14px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius); color: var(--text);
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    outline: none; margin-bottom: 10px; transition: border-color 0.15s;
+  }
+  .input-field:focus { border-color: var(--green-light); }
+  .input-field::placeholder { color: var(--text3); }
+  .input-label { font-size: 12px; color: var(--text2); text-align: left; display: block; margin-bottom: 4px; }
+ 
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--green-dark); border: 1px solid var(--green-mid);
+    color: #fff; padding: 10px 20px; border-radius: 24px;
+    font-size: 13px; font-weight: 500; z-index: 999;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+ 
+  /* ── RESULTADOS ── */
+  .result-display {
+    display: flex; align-items: center; gap: 8px; justify-content: center;
+  }
+  .score-box {
+    width: 38px; height: 38px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+  }
+  .score-box.home { background: var(--green-mid); color: #fff; }
+  .score-box.away { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
+ 
+  /* ── OPEN PRONOS BTN ── */
+  .open-pronos-btn {
+    position: fixed; bottom: 24px; right: 24px; z-index: 150;
+    background: var(--green-mid); color: #fff;
+    border: none; border-radius: 50px;
+    padding: 14px 24px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 1px;
+    cursor: pointer; box-shadow: 0 8px 24px rgba(26,107,60,0.4);
+    transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+  }
+  .open-pronos-btn:hover { background: var(--green-light); transform: translateY(-2px); }
+  .open-pronos-btn .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+ 
+  /* ── RESPONSIVE ── */
+  @media (max-width: 520px) {
+    .hero h1 { font-size: 36px; }
+    .team-name { font-size: 11px; }
+    .header-nav .hnav-btn { padding: 6px 8px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+ 
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo">⚽ <span>PRODE</span> MUNDIAL <span style="color:var(--green-light)">2026</span></div>
+  <nav class="header-nav">
+    <button class="hnav-btn active" onclick="showSection('inicio',this)">Inicio</button>
+    <button class="hnav-btn" onclick="showSection('tabla',this)">Tabla</button>
+    <button class="hnav-btn" onclick="showSection('todos',this)">Todos</button>
+    <button class="hnav-btn" onclick="showSection('resultados',this)">Resultados</button>
+  </nav>
+  <div class="header-user" id="header-user-area">
+    <button class="btn-login" onclick="openLogin()">Ingresar</button>
+  </div>
+</header>
+ 
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🏆 FIFA World Cup 2026 · USA · CAN · MEX</div>
+  <h1>PRODE <span class="accent">MUNDIAL</span></h1>
+  <p>Ingresá tus pronósticos para los 104 partidos y competí con tus amigos</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-val">104</div><div class="hero-stat-lbl">Partidos</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">48</div><div class="hero-stat-lbl">Selecciones</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">12</div><div class="hero-stat-lbl">Grupos</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">19 Jul</div><div class="hero-stat-lbl">Final</div></div>
+  </div>
+</div>
+ 
+<main class="main">
+ 
+  <!-- INICIO -->
+  <div id="inicio" class="section active">
+    <div class="stats-grid" style="margin-top:0">
+      <div class="stat-card"><div class="stat-val" id="st-participantes">0</div><div class="stat-lbl">Participantes</div></div>
+      <div class="stat-card"><div class="stat-val" id="st-pronosticos">0</div><div class="stat-lbl">Pronósticos cargados</div></div>
+      <div class="stat-card"><div class="stat-val">0</div><div class="stat-lbl">Partidos jugados</div></div>
+      <div class="stat-card"><div class="stat-val">11 Jun</div><div class="stat-lbl">Próximo partido</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><div class="dot"></div> Sistema de puntos</div>
+      </div>
+      <div style="padding:16px 18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+        <div style="background:var(--bg3);border-radius:var(--radius);padding:14px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold)">4 pts</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px">Resultado exacto<br><span style="color:var(--text3)">(ej: pronosticás 2-1, termina 2-1)</span></div>
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--radius);padding:14px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--text2)">2 pts</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px">Ganador correcto<br><span style="color:var(--text3)">(acertás quién gana pero no el marcador)</span></div>
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--radius);padding:14px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--text2)">2 pts</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px">Empate acertado<br><span style="color:var(--text3)">(pronosticás empate y empataron)</span></div>
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--radius);padding:14px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#f87171">0 pts</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px">Error<br><span style="color:var(--text3)">(el resultado no coincide)</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:16px;background:var(--bg2);border:1px solid rgba(201,162,39,0.2);border-radius:var(--radius);color:var(--text2);font-size:13px;line-height:1.6;">
+      💡 <strong style="color:var(--gold)">Tip:</strong> Hacé click en <strong style="color:var(--green-light)">"Mis Pronósticos"</strong> (botón verde inferior) para cargar tus predicciones partido por partido. Cada jugador ingresa con su nombre y el código del grupo.
+    </div>
+  </div>
+ 
+  <!-- TABLA -->
+  <div id="tabla" class="section">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><div class="dot"></div> Tabla de posiciones</div>
+        <span style="font-size:11px;color:var(--text3)">Se actualiza automáticamente</span>
+      </div>
+      <div class="tabla-wrap">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jugador</th>
+              <th>Exactos</th>
+              <th>Parciales</th>
+              <th>Errores</th>
+              <th>Pts</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body">
+            <tr><td colspan="6" style="text-align:center;color:var(--text3);padding:32px">Aún no hay datos. ¡Cargá tus pronósticos!</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- TODOS -->
+  <div id="todos" class="section">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><div class="dot"></div> Pronósticos de todos</div>
+        <select id="match-selector" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:5px 10px;font-family:'Inter',sans-serif;font-size:12px;outline:none;" onchange="renderTodos()">
+          <option value="">— Seleccioná un partido —</option>
+        </select>
+      </div>
+      <div class="tabla-wrap">
+        <table class="tabla" id="todos-table">
+          <thead><tr><th>Jugador</th><th>Pronóstico</th><th>Resultado oficial</th></tr></thead>
+          <tbody id="todos-body">
+            <tr><td colspan="3" style="text-align:center;color:var(--text3);padding:32px">Seleccioná un partido para ver los pronósticos</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- RESULTADOS -->
+  <div id="resultados" class="section">
+    <div style="margin-bottom:16px;padding:14px 16px;background:rgba(201,162,39,0.08);border:1px solid rgba(201,162,39,0.2);border-radius:var(--radius);font-size:13px;color:var(--text2);">
+      ⭐ <strong style="color:var(--gold)">Solo el organizador</strong> puede cargar los resultados oficiales. Ingresá con tu nombre y código de organizador.
+    </div>
+    <div class="card" id="resultados-card">
+      <div class="card-header">
+        <div class="card-title"><div class="dot"></div> Cargar resultados oficiales</div>
+      </div>
+      <div style="padding:20px;text-align:center;color:var(--text3);">
+        <div style="font-size:32px;margin-bottom:12px">🔒</div>
+        <p>Ingresá como organizador para cargar resultados</p>
+        <button class="btn-login" style="margin-top:12px" onclick="openLogin()">Ingresar</button>
+      </div>
+    </div>
+  </div>
+ 
+</main>
+ 
+<!-- BOTÓN FLOTANTE -->
+<button class="open-pronos-btn" onclick="openPronosticos()">
+  <div class="pulse"></div>
+  MIS PRONÓSTICOS
+</button>
+ 
+<!-- MODAL PRONÓSTICOS -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">📝 MIS PRONÓSTICOS</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:2px" id="modal-user-info">Ingresá para guardar tus predicciones</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="phase-tabs" id="phase-tabs">
+        <button class="phase-tab active" onclick="setPhase(this,'grupos')">Fase de grupos</button>
+        <button class="phase-tab" onclick="setPhase(this,'r32')">Ronda 32</button>
+        <button class="phase-tab" onclick="setPhase(this,'r16')">Octavos</button>
+        <button class="phase-tab" onclick="setPhase(this,'cuartos')">Cuartos</button>
+        <button class="phase-tab" onclick="setPhase(this,'semis')">Semis</button>
+        <button class="phase-tab" onclick="setPhase(this,'final')">Final</button>
+      </div>
+      <div id="matches-container"></div>
+      <button class="btn-save" onclick="savePronosticos()">💾 GUARDAR PRONÓSTICOS</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- LOGIN MODAL -->
+<div class="login-modal-overlay" id="login-overlay">
+  <div class="login-modal">
+    <div class="login-icon">⚽</div>
+    <h2>INGRESÁ AL PRODE</h2>
+    <p>Identificate para cargar y guardar tus pronósticos</p>
+    <label class="input-label">Tu nombre</label>
+    <input class="input-field" type="text" id="login-nombre" placeholder="Ej: Martín González" />
+    <label class="input-label">Código del grupo</label>
+    <input class="input-field" type="text" id="login-codigo" placeholder="Pedíselo al organizador" />
+    <button class="btn-save" onclick="doLogin()" style="margin-top:4px">ENTRAR AL GRUPO</button>
+    <button onclick="closeLogin()" style="margin-top:10px;width:100%;padding:8px;background:transparent;border:1px solid var(--border);border-radius:var(--radius);color:var(--text2);cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;">Cancelar</button>
+    <p style="margin-top:16px;font-size:11px;color:var(--text3)">Código de demo: <strong style="color:var(--gold)">MUNDIAL26</strong></p>
+  </div>
+</div>
+ 
+<div class="toast" id="toast"></div>
+ 
+<script>
+// ── DATA: FIXTURE OFICIAL MUNDIAL 2026 ──
+const FIXTURE = {
+  grupos: [
+    // GRUPO A
+    { id:'A1', grupo:'A', local:'México 🇲🇽', visita:'Sudáfrica 🇿🇦', fecha:'11 Jun', hora:'16:00 ARG', sede:'Azteca, Ciudad de México' },
+    { id:'A2', grupo:'A', local:'Corea del Sur 🇰🇷', visita:'Rep. Checa 🇨🇿', fecha:'11 Jun', hora:'23:00 ARG', sede:'Akron, Zapopan' },
+    { id:'A3', grupo:'A', local:'Rep. Checa 🇨🇿', visita:'Sudáfrica 🇿🇦', fecha:'18 Jun', hora:'14:00 ARG', sede:'Mercedes-Benz, Atlanta' },
+    { id:'A4', grupo:'A', local:'México 🇲🇽', visita:'Corea del Sur 🇰🇷', fecha:'18 Jun', hora:'23:00 ARG', sede:'Akron, Zapopan' },
+    { id:'A5', grupo:'A', local:'Rep. Checa 🇨🇿', visita:'México 🇲🇽', fecha:'24 Jun', hora:'23:00 ARG', sede:'Azteca, Ciudad de México' },
+    { id:'A6', grupo:'A', local:'Sudáfrica 🇿🇦', visita:'Corea del Sur 🇰🇷', fecha:'24 Jun', hora:'23:00 ARG', sede:'BBVA, Guadalupe' },
+    // GRUPO B
+    { id:'B1', grupo:'B', local:'Canadá 🇨🇦', visita:'Bosnia y Herz. 🇧🇦', fecha:'12 Jun', hora:'16:00 ARG', sede:'BMO Field, Toronto' },
+    { id:'B2', grupo:'B', local:'Qatar 🇶🇦', visita:'Suiza 🇨🇭', fecha:'13 Jun', hora:'16:00 ARG', sede:"Levi's, Santa Clara" },
+    { id:'B3', grupo:'B', local:'Suiza 🇨🇭', visita:'Bosnia y Herz. 🇧🇦', fecha:'18 Jun', hora:'17:00 ARG', sede:'SoFi, Inglewood' },
+    { id:'B4', grupo:'B', local:'Canadá 🇨🇦', visita:'Qatar 🇶🇦', fecha:'18 Jun', hora:'20:00 ARG', sede:'BC Place, Vancouver' },
+    { id:'B5', grupo:'B', local:'Suiza 🇨🇭', visita:'Canadá 🇨🇦', fecha:'24 Jun', hora:'17:00 ARG', sede:'BC Place, Vancouver' },
+    { id:'B6', grupo:'B', local:'Bosnia y Herz. 🇧🇦', visita:'Qatar 🇶🇦', fecha:'24 Jun', hora:'17:00 ARG', sede:'Lumen Field, Seattle' },
+    // GRUPO C
+    { id:'C1', grupo:'C', local:'Brasil 🇧🇷', visita:'Marruecos 🇲🇦', fecha:'13 Jun', hora:'19:00 ARG', sede:'MetLife, East Rutherford' },
+    { id:'C2', grupo:'C', local:'Haití 🇭🇹', visita:'Escocia 🏴󠁧󠁢󠁳󠁣󠁴󠁿', fecha:'13 Jun', hora:'22:00 ARG', sede:'Gillette, Foxborough' },
+    { id:'C3', grupo:'C', local:'Escocia 🏴󠁧󠁢󠁳󠁣󠁴󠁿', visita:'Marruecos 🇲🇦', fecha:'19 Jun', hora:'20:00 ARG', sede:'Gillette, Foxborough' },
+    { id:'C4', grupo:'C', local:'Brasil 🇧🇷', visita:'Haití 🇭🇹', fecha:'19 Jun', hora:'23:00 ARG', sede:'Lincoln Financial, Filadelfia' },
+    { id:'C5', grupo:'C', local:'Escocia 🏴󠁧󠁢󠁳󠁣󠁴󠁿', visita:'Brasil 🇧🇷', fecha:'24 Jun', hora:'20:00 ARG', sede:'Hard Rock, Miami' },
+    { id:'C6', grupo:'C', local:'Marruecos 🇲🇦', visita:'Haití 🇭🇹', fecha:'24 Jun', hora:'20:00 ARG', sede:'Mercedes-Benz, Atlanta' },
+    // GRUPO D
+    { id:'D1', grupo:'D', local:'Estados Unidos 🇺🇸', visita:'Paraguay 🇵🇾', fecha:'12 Jun', hora:'22:00 ARG', sede:'SoFi, Inglewood' },
+    { id:'D2', grupo:'D', local:'Australia 🇦🇺', visita:'Rep. Europeo C 🏳️', fecha:'14 Jun', hora:'01:00 ARG', sede:'BC Place, Vancouver' },
+    { id:'D3', grupo:'D', local:'Rep. Europeo C 🏳️', visita:'Paraguay 🇵🇾', fecha:'19 Jun', hora:'01:00 ARG', sede:"Levi's, Santa Clara" },
+    { id:'D4', grupo:'D', local:'Estados Unidos 🇺🇸', visita:'Australia 🇦🇺', fecha:'19 Jun', hora:'17:00 ARG', sede:'Lumen Field, Seattle' },
+    { id:'D5', grupo:'D', local:'Rep. Europeo C 🏳️', visita:'Estados Unidos 🇺🇸', fecha:'25 Jun', hora:'00:00 ARG', sede:'SoFi, Inglewood' },
+    { id:'D6', grupo:'D', local:'Paraguay 🇵🇾', visita:'Australia 🇦🇺', fecha:'25 Jun', hora:'00:00 ARG', sede:"Levi's, Santa Clara" },
+    // GRUPO E
+    { id:'E1', grupo:'E', local:'Alemania 🇩🇪', visita:'Curazao 🇨🇼', fecha:'14 Jun', hora:'15:00 ARG', sede:'NRG, Houston' },
+    { id:'E2', grupo:'E', local:'Costa de Marfil 🇨🇮', visita:'Ecuador 🇪🇨', fecha:'14 Jun', hora:'21:00 ARG', sede:'Lincoln Financial, Filadelfia' },
+    { id:'E3', grupo:'E', local:'Alemania 🇩🇪', visita:'Costa de Marfil 🇨🇮', fecha:'20 Jun', hora:'18:00 ARG', sede:'BMO Field, Toronto' },
+    { id:'E4', grupo:'E', local:'Curazao 🇨🇼', visita:'Ecuador 🇪🇨', fecha:'20 Jun', hora:'22:00 ARG', sede:'Arrowhead, Kansas City' },
+    { id:'E5', grupo:'E', local:'Ecuador 🇪🇨', visita:'Alemania 🇩🇪', fecha:'25 Jun', hora:'18:00 ARG', sede:'MetLife, East Rutherford' },
+    { id:'E6', grupo:'E', local:'Curazao 🇨🇼', visita:'Costa de Marfil 🇨🇮', fecha:'25 Jun', hora:'18:00 ARG', sede:'Lincoln Financial, Filadelfia' },
+    // GRUPO F
+    { id:'F1', grupo:'F', local:'Países Bajos 🇳🇱', visita:'Japón 🇯🇵', fecha:'14 Jun', hora:'18:00 ARG', sede:'AT&T, Arlington' },
+    { id:'F2', grupo:'F', local:'Rep. Europeo B 🏳️', visita:'Túnez 🇹🇳', fecha:'15 Jun', hora:'00:00 ARG', sede:'BBVA, Guadalupe' },
+    { id:'F3', grupo:'F', local:'Países Bajos 🇳🇱', visita:'Rep. Europeo B 🏳️', fecha:'20 Jun', hora:'15:00 ARG', sede:'NRG, Houston' },
+    { id:'F4', grupo:'F', local:'Túnez 🇹🇳', visita:'Japón 🇯🇵', fecha:'20 Jun', hora:'02:00 ARG', sede:'BBVA, Guadalupe' },
+    { id:'F5', grupo:'F', local:'Japón 🇯🇵', visita:'Rep. Europeo B 🏳️', fecha:'25 Jun', hora:'21:00 ARG', sede:'AT&T, Arlington' },
+    { id:'F6', grupo:'F', local:'Túnez 🇹🇳', visita:'Países Bajos 🇳🇱', fecha:'25 Jun', hora:'21:00 ARG', sede:'Arrowhead, Kansas City' },
+    // GRUPO G
+    { id:'G1', grupo:'G', local:'Bélgica 🇧🇪', visita:'Egipto 🇪🇬', fecha:'15 Jun', hora:'17:00 ARG', sede:'Lumen Field, Seattle' },
+    { id:'G2', grupo:'G', local:'Irán 🇮🇷', visita:'Nueva Zelanda 🇳🇿', fecha:'15 Jun', hora:'23:00 ARG', sede:'SoFi, Inglewood' },
+    { id:'G3', grupo:'G', local:'Bélgica 🇧🇪', visita:'Irán 🇮🇷', fecha:'21 Jun', hora:'17:00 ARG', sede:'SoFi, Inglewood' },
+    { id:'G4', grupo:'G', local:'Nueva Zelanda 🇳🇿', visita:'Egipto 🇪🇬', fecha:'21 Jun', hora:'23:00 ARG', sede:'BC Place, Vancouver' },
+    { id:'G5', grupo:'G', local:'Nueva Zelanda 🇳🇿', visita:'Bélgica 🇧🇪', fecha:'26 Jun', hora:'01:00 ARG', sede:'BC Place, Vancouver' },
+    { id:'G6', grupo:'G', local:'Egipto 🇪🇬', visita:'Irán 🇮🇷', fecha:'26 Jun', hora:'01:00 ARG', sede:'Lumen Field, Seattle' },
+    // GRUPO H
+    { id:'H1', grupo:'H', local:'España 🇪🇸', visita:'Cabo Verde 🇨🇻', fecha:'15 Jun', hora:'14:00 ARG', sede:'Mercedes-Benz, Atlanta' },
+    { id:'H2', grupo:'H', local:'Arabia Saudita 🇸🇦', visita:'Uruguay 🇺🇾', fecha:'15 Jun', hora:'20:00 ARG', sede:'Hard Rock, Miami' },
+    { id:'H3', grupo:'H', local:'España 🇪🇸', visita:'Arabia Saudita 🇸🇦', fecha:'21 Jun', hora:'14:00 ARG', sede:'Mercedes-Benz, Atlanta' },
+    { id:'H4', grupo:'H', local:'Uruguay 🇺🇾', visita:'Cabo Verde 🇨🇻', fecha:'21 Jun', hora:'20:00 ARG', sede:'Hard Rock, Miami' },
+    { id:'H5', grupo:'H', local:'Uruguay 🇺🇾', visita:'España 🇪🇸', fecha:'21 Jun', hora:'22:00 ARG', sede:'BBVA, Guadalajara' },
+    { id:'H6', grupo:'H', local:'Cabo Verde 🇨🇻', visita:'Arabia Saudita 🇸🇦', fecha:'21 Jun', hora:'22:00 ARG', sede:'NRG, Houston' },
+    // GRUPO I
+    { id:'I1', grupo:'I', local:'Francia 🇫🇷', visita:'Senegal 🇸🇳', fecha:'16 Jun', hora:'17:00 ARG', sede:'MetLife, East Rutherford' },
+    { id:'I2', grupo:'I', local:'Rep. Repechaje 2 🏳️', visita:'Noruega 🇳🇴', fecha:'16 Jun', hora:'20:00 ARG', sede:'Gillette, Foxborough' },
+    { id:'I3', grupo:'I', local:'Francia 🇫🇷', visita:'Rep. Repechaje 2 🏳️', fecha:'22 Jun', hora:'19:00 ARG', sede:'Lincoln Financial, Filadelfia' },
+    { id:'I4', grupo:'I', local:'Noruega 🇳🇴', visita:'Senegal 🇸🇳', fecha:'22 Jun', hora:'22:00 ARG', sede:'MetLife, East Rutherford' },
+    { id:'I5', grupo:'I', local:'Noruega 🇳🇴', visita:'Francia 🇫🇷', fecha:'22 Jun', hora:'17:00 ARG', sede:'Gillette, Foxborough' },
+    { id:'I6', grupo:'I', local:'Senegal 🇸🇳', visita:'Rep. Repechaje 2 🏳️', fecha:'26 Jun', hora:'17:00 ARG', sede:'BMO Field, Toronto' },
+    // GRUPO J
+    { id:'J1', grupo:'J', local:'Argentina 🇦🇷', visita:'Argelia 🇩🇿', fecha:'16 Jun', hora:'23:00 ARG', sede:'Arrowhead, Kansas City' },
+    { id:'J2', grupo:'J', local:'Austria 🇦🇹', visita:'Jordania 🇯🇴', fecha:'17 Jun', hora:'02:00 ARG', sede:"Levi's, Santa Clara" },
+    { id:'J3', grupo:'J', local:'Argentina 🇦🇷', visita:'Austria 🇦🇹', fecha:'22 Jun', hora:'15:00 ARG', sede:'AT&T, Arlington' },
+    { id:'J4', grupo:'J', local:'Jordania 🇯🇴', visita:'Argelia 🇩🇿', fecha:'23 Jun', hora:'01:00 ARG', sede:"Levi's, Santa Clara" },
+    { id:'J5', grupo:'J', local:'Jordania 🇯🇴', visita:'Argentina 🇦🇷', fecha:'27 Jun', hora:'00:00 ARG', sede:'AT&T, Arlington' },
+    { id:'J6', grupo:'J', local:'Argelia 🇩🇿', visita:'Austria 🇦🇹', fecha:'27 Jun', hora:'00:00 ARG', sede:'Arrowhead, Kansas City' },
+    // GRUPO K
+    { id:'K1', grupo:'K', local:'Portugal 🇵🇹', visita:'Rep. Repechaje 1 🏳️', fecha:'17 Jun', hora:'15:00 ARG', sede:'NRG, Houston' },
+    { id:'K2', grupo:'K', local:'Uzbekistán 🇺🇿', visita:'Colombia 🇨🇴', fecha:'18 Jun', hora:'00:00 ARG', sede:'Azteca, México' },
+    { id:'K3', grupo:'K', local:'Portugal 🇵🇹', visita:'Uzbekistán 🇺🇿', fecha:'23 Jun', hora:'15:00 ARG', sede:'NRG, Houston' },
+    { id:'K4', grupo:'K', local:'Colombia 🇨🇴', visita:'Rep. Repechaje 1 🏳️', fecha:'24 Jun', hora:'00:00 ARG', sede:'Akron, Zapopan' },
+    { id:'K5', grupo:'K', local:'Colombia 🇨🇴', visita:'Portugal 🇵🇹', fecha:'27 Jun', hora:'21:30 ARG', sede:'Hard Rock, Miami' },
+    { id:'K6', grupo:'K', local:'Rep. Repechaje 1 🏳️', visita:'Uzbekistán 🇺🇿', fecha:'27 Jun', hora:'21:30 ARG', sede:'Mercedes-Benz, Atlanta' },
+    // GRUPO L
+    { id:'L1', grupo:'L', local:'Inglaterra 🏴󠁧󠁢󠁥󠁮󠁧󠁿', visita:'Croacia 🇭🇷', fecha:'17 Jun', hora:'18:00 ARG', sede:'AT&T, Arlington' },
+    { id:'L2', grupo:'L', local:'Ghana 🇬🇭', visita:'Panamá 🇵🇦', fecha:'17 Jun', hora:'21:00 ARG', sede:'BMO Field, Toronto' },
+    { id:'L3', grupo:'L', local:'Inglaterra 🏴󠁧󠁢󠁥󠁮󠁧󠁿', visita:'Ghana 🇬🇭', fecha:'23 Jun', hora:'18:00 ARG', sede:'Gillette, Foxborough' },
+    { id:'L4', grupo:'L', local:'Panamá 🇵🇦', visita:'Croacia 🇭🇷', fecha:'23 Jun', hora:'21:00 ARG', sede:'BMO Field, Toronto' },
+    { id:'L5', grupo:'L', local:'Panamá 🇵🇦', visita:'Inglaterra 🏴󠁧󠁢󠁥󠁮󠁧󠁿', fecha:'27 Jun', hora:'19:00 ARG', sede:'MetLife, East Rutherford' },
+    { id:'L6', grupo:'L', local:'Croacia 🇭🇷', visita:'Ghana 🇬🇭', fecha:'27 Jun', hora:'19:00 ARG', sede:'Lincoln Financial, Filadelfia' },
+  ],
+  r32: [
+    { id:'R32-1', label:'R32 P1', local:'2° Grupo A', visita:'2° Grupo B', fecha:'28 Jun', hora:'17:00 ARG', sede:'SoFi, Inglewood' },
+    { id:'R32-2', label:'R32 P2', local:'1° Grupo E', visita:'3° mejor', fecha:'29 Jun', hora:'18:30 ARG', sede:'Gillette, Foxborough' },
+    { id:'R32-3', label:'R32 P3', local:'1° Grupo F', visita:'2° Grupo C', fecha:'29 Jun', hora:'23:00 ARG', sede:'BBVA, Guadalupe' },
+    { id:'R32-4', label:'R32 P4', local:'1° Grupo C', visita:'2° Grupo F', fecha:'29 Jun', hora:'15:00 ARG', sede:'NRG, Houston' },
+    { id:'R32-5', label:'R32 P5', local:'1° Grupo I', visita:'3° mejor', fecha:'30 Jun', hora:'19:00 ARG', sede:'MetLife, E. Rutherford' },
+    { id:'R32-6', label:'R32 P6', local:'2° Grupo E', visita:'2° Grupo I', fecha:'30 Jun', hora:'15:00 ARG', sede:'AT&T, Arlington' },
+    { id:'R32-7', label:'R32 P7', local:'1° Grupo A', visita:'3° mejor', fecha:'30 Jun', hora:'23:00 ARG', sede:'Azteca, Ciudad de México' },
+    { id:'R32-8', label:'R32 P8', local:'1° Grupo L', visita:'3° mejor', fecha:'1 Jul', hora:'14:00 ARG', sede:'Mercedes-Benz, Atlanta' },
+    { id:'R32-9', label:'R32 P9', local:'1° Grupo D', visita:'3° mejor', fecha:'1 Jul', hora:'22:00 ARG', sede:"Levi's, Santa Clara" },
+    { id:'R32-10', label:'R32 P10', local:'1° Grupo G', visita:'3° mejor', fecha:'1 Jul', hora:'18:00 ARG', sede:'Lumen Field, Seattle' },
+    { id:'R32-11', label:'R32 P11', local:'2° Grupo K', visita:'2° Grupo L', fecha:'2 Jul', hora:'21:00 ARG', sede:'BMO Field, Toronto' },
+    { id:'R32-12', label:'R32 P12', local:'1° Grupo H', visita:'2° Grupo J', fecha:'2 Jul', hora:'17:00 ARG', sede:'SoFi, Inglewood' },
+    { id:'R32-13', label:'R32 P13', local:'1° Grupo B', visita:'3° mejor', fecha:'2 Jul', hora:'01:00 ARG', sede:'BC Place, Vancouver' },
+    { id:'R32-14', label:'R32 P14', local:'1° Grupo J', visita:'2° Grupo H', fecha:'3 Jul', hora:'20:00 ARG', sede:'Hard Rock, Miami' },
+    { id:'R32-15', label:'R32 P15', local:'1° Grupo K', visita:'3° mejor', fecha:'3 Jul', hora:'23:30 ARG', sede:'Arrowhead, Kansas City' },
+    { id:'R32-16', label:'R32 P16', local:'2° Grupo D', visita:'2° Grupo G', fecha:'3 Jul', hora:'16:00 ARG', sede:'AT&T, Arlington' },
+  ],
+  r16: [
+    { id:'R16-1', label:'Octavos 1', local:'Gan. R32-2', visita:'Gan. R32-5', fecha:'4 Jul', hora:'19:00 ARG', sede:'Lincoln Financial, Fil.' },
+    { id:'R16-2', label:'Octavos 2', local:'Gan. R32-1', visita:'Gan. R32-3', fecha:'4 Jul', hora:'15:00 ARG', sede:'NRG, Houston' },
+    { id:'R16-3', label:'Octavos 3', local:'Gan. R32-4', visita:'Gan. R32-6', fecha:'5 Jul', hora:'18:00 ARG', sede:'MetLife, E. Rutherford' },
+    { id:'R16-4', label:'Octavos 4', local:'Gan. R32-7', visita:'Gan. R32-8', fecha:'5 Jul', hora:'22:00 ARG', sede:'Azteca, Ciudad de México' },
+    { id:'R16-5', label:'Octavos 5', local:'Gan. R32-11', visita:'Gan. R32-12', fecha:'6 Jul', hora:'17:00 ARG', sede:'AT&T, Arlington' },
+    { id:'R16-6', label:'Octavos 6', local:'Gan. R32-9', visita:'Gan. R32-10', fecha:'6 Jul', hora:'22:00 ARG', sede:'Lumen Field, Seattle' },
+    { id:'R16-7', label:'Octavos 7', local:'Gan. R32-14', visita:'Gan. R32-16', fecha:'7 Jul', hora:'14:00 ARG', sede:'Mercedes-Benz, Atlanta' },
+    { id:'R16-8', label:'Octavos 8', local:'Gan. R32-13', visita:'Gan. R32-15', fecha:'7 Jul', hora:'18:00 ARG', sede:'BC Place, Vancouver' },
+  ],
+  cuartos: [
+    { id:'QF-1', label:'Cuartos 1', local:'Gan. Oct. 1', visita:'Gan. Oct. 2', fecha:'9 Jul', hora:'18:00 ARG', sede:'Gillette, Foxborough' },
+    { id:'QF-2', label:'Cuartos 2', local:'Gan. Oct. 5', visita:'Gan. Oct. 6', fecha:'10 Jul', hora:'17:00 ARG', sede:'SoFi, Inglewood' },
+    { id:'QF-3', label:'Cuartos 3', local:'Gan. Oct. 3', visita:'Gan. Oct. 4', fecha:'11 Jul', hora:'23:00 ARG', sede:'Hard Rock, Miami' },
+    { id:'QF-4', label:'Cuartos 4', local:'Gan. Oct. 7', visita:'Gan. Oct. 8', fecha:'11 Jul', hora:'19:00 ARG', sede:'Arrowhead, Kansas City' },
+  ],
+  semis: [
+    { id:'SF-1', label:'Semifinal 1', local:'Gan. CF 1', visita:'Gan. CF 2', fecha:'14 Jul', hora:'17:00 ARG', sede:'AT&T, Arlington' },
+    { id:'SF-2', label:'Semifinal 2', local:'Gan. CF 3', visita:'Gan. CF 4', fecha:'15 Jul', hora:'17:00 ARG', sede:'Mercedes-Benz, Atlanta' },
+  ],
+  final: [
+    { id:'3RD', label:'3er puesto', local:'Per. SF 1', visita:'Per. SF 2', fecha:'18 Jul', hora:'19:00 ARG', sede:'Hard Rock, Miami' },
+    { id:'FINAL', label:'🏆 FINAL', local:'Gan. SF 1', visita:'Gan. SF 2', fecha:'19 Jul', hora:'17:00 ARG', sede:'MetLife, East Rutherford' },
+  ]
+};
+ 
+// ── STATE ──
+let currentUser = null;
+let pronosticos = {}; // { userId: { matchId: { h, a } } }
+let currentPhase = 'grupos';
+ 
+// ── RENDER ──
+function renderMatches(phase) {
+  const container = document.getElementById('matches-container');
+  const matches = FIXTURE[phase];
+  if (!matches) return;
+ 
+  if (phase === 'grupos') {
+    const groups = {};
+    matches.forEach(m => { if(!groups[m.grupo]) groups[m.grupo] = []; groups[m.grupo].push(m); });
+    container.innerHTML = Object.entries(groups).map(([g, ms]) => `
+      <div class="grupo-block">
+        <div class="grupo-label">Grupo ${g}</div>
+        ${ms.map(m => matchCard(m)).join('')}
+      </div>
+    `).join('');
+  } else {
+    container.innerHTML = matches.map(m => matchCard(m)).join('');
+  }
+  loadInputValues();
+}
+ 
+function matchCard(m) {
+  const saved = currentUser && pronosticos[currentUser] && pronosticos[currentUser][m.id];
+  const hv = saved ? saved.h : '';
+  const av = saved ? saved.a : '';
+  return `
+    <div class="match-card${saved ? ' saved' : ''}" id="mc-${m.id}">
+      <div class="match-top">
+        <div class="team-block">
+          <span class="team-name">${m.local}</span>
+        </div>
+        <div class="score-inputs">
+          <input class="score-in" type="number" min="0" max="20" placeholder="?" id="h-${m.id}" value="${hv}" onchange="markChanged('${m.id}')">
+          <span class="vs-sep">—</span>
+          <input class="score-in" type="number" min="0" max="20" placeholder="?" id="a-${m.id}" value="${av}" onchange="markChanged('${m.id}')">
+        </div>
+        <div class="team-block" style="justify-content:flex-end">
+          <span class="team-name" style="text-align:right">${m.visita}</span>
+        </div>
+      </div>
+      <div class="match-meta">
+        <span>📅 ${m.fecha}</span>
+        <span>🕐 ${m.hora}</span>
+        <span>📍 ${m.sede}</span>
+      </div>
+    </div>
+  `;
+}
+ 
+function markChanged(id) {
+  const card = document.getElementById('mc-' + id);
+  if (card) card.style.borderColor = 'rgba(201,162,39,0.4)';
+}
+ 
+function loadInputValues() {
+  if (!currentUser) return;
+  const ups = pronosticos[currentUser] || {};
+  Object.keys(ups).forEach(id => {
+    const hi = document.getElementById('h-' + id);
+    const ai = document.getElementById('a-' + id);
+    if (hi) hi.value = ups[id].h;
+    if (ai) ai.value = ups[id].a;
+  });
+}
+ 
+// ── PHASE ──
+function setPhase(el, phase) {
+  document.querySelectorAll('.phase-tab').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentPhase = phase;
+  renderMatches(phase);
+}
+ 
+// ── MODAL ──
+function openPronosticos() {
+  if (!currentUser) { openLogin(); return; }
+  document.getElementById('modal-overlay').classList.add('open');
+  renderMatches(currentPhase);
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+ 
+// ── LOGIN ──
+function openLogin() {
+  document.getElementById('login-overlay').classList.add('open');
+}
+function closeLogin() {
+  document.getElementById('login-overlay').classList.remove('open');
+}
+function doLogin() {
+  const nombre = document.getElementById('login-nombre').value.trim();
+  const codigo = document.getElementById('login-codigo').value.trim().toUpperCase();
+  if (!nombre) { showToast('⚠️ Ingresá tu nombre'); return; }
+  if (codigo !== 'MUNDIAL26') { showToast('❌ Código incorrecto. Usá: MUNDIAL26'); return; }
+  currentUser = nombre;
+  if (!pronosticos[currentUser]) pronosticos[currentUser] = {};
+  closeLogin();
+  updateHeaderUser();
+  updateStats();
+  showToast('⚽ ¡Bienvenido, ' + nombre + '!');
+  setTimeout(() => openPronosticos(), 400);
+}
+function updateHeaderUser() {
+  const area = document.getElementById('header-user-area');
+  if (currentUser) {
+    const initials = currentUser.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
+    area.innerHTML = `<div class="user-avatar" title="${currentUser}">${initials}</div><span style="font-size:13px;color:var(--text2)">${currentUser}</span>`;
+    document.getElementById('modal-user-info').textContent = `Jugando como: ${currentUser}`;
+  }
+}
+ 
+// ── SAVE ──
+function savePronosticos() {
+  if (!currentUser) { showToast('⚠️ Primero ingresá al grupo'); return; }
+  const allPhases = Object.keys(FIXTURE);
+  let count = 0;
+  allPhases.forEach(phase => {
+    FIXTURE[phase].forEach(m => {
+      const hi = document.getElementById('h-' + m.id);
+      const ai = document.getElementById('a-' + m.id);
+      if (hi && ai && hi.value !== '' && ai.value !== '') {
+        pronosticos[currentUser][m.id] = { h: parseInt(hi.value), a: parseInt(ai.value) };
+        const card = document.getElementById('mc-' + m.id);
+        if (card) card.classList.add('saved'), card.style.borderColor = '';
+        count++;
+      }
+    });
+  });
+  updateStats();
+  updateTabla();
+  updateMatchSelector();
+  showToast('✅ ' + count + ' pronósticos guardados');
+}
+ 
+// ── STATS ──
+function updateStats() {
+  const parts = Object.keys(pronosticos).length;
+  document.getElementById('st-participantes').textContent = parts;
+  let total = 0;
+  Object.values(pronosticos).forEach(p => total += Object.keys(p).length);
+  document.getElementById('st-pronosticos').textContent = total;
+}
+ 
+// ── TABLA ──
+const RESULTADOS_OFICIALES = {};
+ 
+function calcPuntos(user) {
+  let pts=0, exactos=0, parciales=0, errores=0;
+  const ups = pronosticos[user] || {};
+  Object.keys(ups).forEach(id => {
+    if (!RESULTADOS_OFICIALES[id]) return;
+    const p = ups[id]; const r = RESULTADOS_OFICIALES[id];
+    if (p.h === r.h && p.a === r.a) { pts += 4; exactos++; }
+    else if ((p.h > p.a && r.h > r.a) || (p.h < p.a && r.h < r.a) || (p.h === p.a && r.h === r.a)) { pts += 2; parciales++; }
+    else errores++;
+  });
+  return { pts, exactos, parciales, errores };
+}
+ 
+function updateTabla() {
+  const tbody = document.getElementById('tabla-body');
+  const users = Object.keys(pronosticos);
+  if (!users.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:32px">Aún no hay datos. ¡Cargá tus pronósticos!</td></tr>';
+    return;
+  }
+  const rows = users.map(u => ({ u, ...calcPuntos(u) })).sort((a,b) => b.pts - a.pts || b.exactos - a.exactos);
+  tbody.innerHTML = rows.map((r,i) => {
+    const rankLabel = i===0 ? '<span class="rank-gold">🥇</span>' : i===1 ? '<span class="rank-silver">🥈</span>' : i===2 ? '<span class="rank-bronze">🥉</span>' : `<span class="rank-num">${i+1}</span>`;
+    const initials = r.u.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    return `<tr>
+      <td>${rankLabel}</td>
+      <td><div class="player-cell"><div class="avatar">${initials}</div>${r.u}</div></td>
+      <td>${r.exactos}</td><td>${r.parciales}</td><td>${r.errores}</td>
+      <td><span class="pts-big">${r.pts}</span></td>
+    </tr>`;
+  }).join('');
+}
+ 
+// ── TODOS ──
+function updateMatchSelector() {
+  const sel = document.getElementById('match-selector');
+  const current = sel.value;
+  sel.innerHTML = '<option value="">— Seleccioná un partido —</option>';
+  const allMatches = Object.values(FIXTURE).flat();
+  allMatches.forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m.id;
+    opt.textContent = `${m.local.split(' ')[0]} vs ${m.visita.split(' ')[0]} (${m.fecha})`;
+    sel.appendChild(opt);
+  });
+  if (current) sel.value = current;
+}
+ 
+function renderTodos() {
+  const id = document.getElementById('match-selector').value;
+  const tbody = document.getElementById('todos-body');
+  if (!id) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text3);padding:24px">Seleccioná un partido</td></tr>'; return; }
+  const users = Object.keys(pronosticos);
+  if (!users.length) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text3);padding:24px">No hay pronósticos aún</td></tr>'; return; }
+  const oficial = RESULTADOS_OFICIALES[id];
+  tbody.innerHTML = users.map(u => {
+    const p = pronosticos[u][id];
+    const initials = u.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    let badge = '<span style="color:var(--text3);font-size:12px">Sin pronóstico</span>';
+    let pronoText = '—';
+    if (p) {
+      pronoText = `${p.h} – ${p.a}`;
+      if (oficial) {
+        if (p.h===oficial.h && p.a===oficial.a) badge = '<span class="badge badge-exact">✓ Exacto +4</span>';
+        else if ((p.h>p.a&&oficial.h>oficial.a)||(p.h<p.a&&oficial.h<oficial.a)||(p.h===p.a&&oficial.h===oficial.a)) badge = '<span class="badge badge-partial">~ Parcial +2</span>';
+        else badge = '<span class="badge badge-wrong">✗ Error +0</span>';
+      } else badge = '<span style="color:var(--text3);font-size:12px">Pendiente</span>';
+    }
+    return `<tr><td><div class="player-cell"><div class="avatar">${initials}</div>${u}</div></td><td style="font-weight:600">${pronoText}</td><td>${badge}</td></tr>`;
+  }).join('');
+}
+ 
+// ── NAV ──
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.hnav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'tabla') updateTabla();
+  if (id === 'todos') { updateMatchSelector(); renderTodos(); }
+}
+ 
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+ 
+// ── INIT ──
+updateMatchSelector();
+</script>
+</body>
+</html>
