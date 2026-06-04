@@ -930,6 +930,18 @@ function updateTabla() {
 }
  
 // ── TODOS ──
+  // ── HACER FUNCIONES VISIBLES PARA LOS BOTONES ──
+window.showSection = showSection;
+window.openLogin = openLogin;
+window.closeLogin = closeLogin;
+window.doLogin = doLogin;
+window.openPronosticos = openPronosticos;
+window.closeModal = closeModal;
+window.closeModalOutside = closeModalOutside;
+window.setPhase = setPhase;
+window.savePronosticos = savePronosticos;
+window.renderTodos = renderTodos;
+window.markChanged = markChanged;
 // ── FIRESTORE SYNC ──
 onSnapshot(collection(db, "pronosticos"), snapshot => {
   pronosticos = {};
