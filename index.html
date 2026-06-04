@@ -967,6 +967,26 @@ function showToast(msg) {
  
 // ── INIT ──
 updateMatchSelector();
-</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  collection,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAJ8bSAb5JrEKJmAfUm7fTPakhHHxlMefg",
+  authDomain: "prodi2026-5a7d6.firebaseapp.com",
+  projectId: "prodi2026-5a7d6",
+  storageBucket: "prodi2026-5a7d6.firebasestorage.app",
+  messagingSenderId: "57386316420",
+  appId: "1:57386316420:web:cb25411b444147c6c948d1"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 </body>
 </html>
