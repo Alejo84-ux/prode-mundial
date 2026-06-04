@@ -841,22 +841,43 @@ function updateHeaderUser() {
 }
  
 // ── SAVE ──
-function savePronosticos() {
-  if (!currentUser) { showToast('⚠️ Primero ingresá al grupo'); return; }
+async function savePronosticos() {
+  if (!currentUser) {
+    showToast('⚠️ Primero ingresá al grupo');
+    return;
+  }
+
   const allPhases = Object.keys(FIXTURE);
   let count = 0;
+
   allPhases.forEach(phase => {
     FIXTURE[phase].forEach(m => {
       const hi = document.getElementById('h-' + m.id);
       const ai = document.getElementById('a-' + m.id);
+
       if (hi && ai && hi.value !== '' && ai.value !== '') {
-        pronosticos[currentUser][m.id] = { h: parseInt(hi.value), a: parseInt(ai.value) };
+        pronosticos[currentUser][m.id] = {
+          h: parseInt(hi.value),
+          a: parseInt(ai.value)
+        };
+
         const card = document.getElementById('mc-' + m.id);
-        if (card) card.classList.add('saved'), card.style.borderColor = '';
+        if (card) {
+          card.classList.add('saved');
+          card.style.borderColor = '';
+        }
+
         count++;
       }
     });
   });
+
+  await setDoc(doc(db, "pronosticos", currentUser), {
+    nombre: currentUser,
+    pronosticos: pronosticos[currentUser],
+    updatedAt: new Date().toISOString()
+  });
+
   updateStats();
   updateTabla();
   updateMatchSelector();
@@ -909,43 +930,25 @@ function updateTabla() {
 }
  
 // ── TODOS ──
-function updateMatchSelector() {
-  const sel = document.getElementById('match-selector');
-  const current = sel.value;
-  sel.innerHTML = '<option value="">— Seleccioná un partido —</option>';
-  const allMatches = Object.values(FIXTURE).flat();
-  allMatches.forEach(m => {
-    const opt = document.createElement('option');
-    opt.value = m.id;
-    opt.textContent = `${m.local.split(' ')[0]} vs ${m.visita.split(' ')[0]} (${m.fecha})`;
-    sel.appendChild(opt);
-  });
-  if (current) sel.value = current;
-}
- 
-function renderTodos() {
-  const id = document.getElementById('match-selector').value;
-  const tbody = document.getElementById('todos-body');
-  if (!id) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text3);padding:24px">Seleccioná un partido</td></tr>'; return; }
-  const users = Object.keys(pronosticos);
-  if (!users.length) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text3);padding:24px">No hay pronósticos aún</td></tr>'; return; }
-  const oficial = RESULTADOS_OFICIALES[id];
-  tbody.innerHTML = users.map(u => {
-    const p = pronosticos[u][id];
-    const initials = u.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
-    let badge = '<span style="color:var(--text3);font-size:12px">Sin pronóstico</span>';
-    let pronoText = '—';
-    if (p) {
-      pronoText = `${p.h} – ${p.a}`;
-      if (oficial) {
-        if (p.h===oficial.h && p.a===oficial.a) badge = '<span class="badge badge-exact">✓ Exacto +4</span>';
-        else if ((p.h>p.a&&oficial.h>oficial.a)||(p.h<p.a&&oficial.h<oficial.a)||(p.h===p.a&&oficial.h===oficial.a)) badge = '<span class="badge badge-partial">~ Parcial +2</span>';
-        else badge = '<span class="badge badge-wrong">✗ Error +0</span>';
-      } else badge = '<span style="color:var(--text3);font-size:12px">Pendiente</span>';
+// ── FIRESTORE SYNC ──
+onSnapshot(collection(db, "pronosticos"), snapshot => {
+  pronosticos = {};
+
+  snapshot.forEach(docSnap => {
+    const data = docSnap.data();
+    if (data.nombre && data.pronosticos) {
+      pronosticos[data.nombre] = data.pronosticos;
     }
-    return `<tr><td><div class="player-cell"><div class="avatar">${initials}</div>${u}</div></td><td style="font-weight:600">${pronoText}</td><td>${badge}</td></tr>`;
-  }).join('');
-}
+  });
+
+  updateStats();
+  updateTabla();
+  updateMatchSelector();
+  renderTodos();
+});
+
+// ── INIT ──
+updateMatchSelector();
  
 // ── NAV ──
 function showSection(id, btn) {
